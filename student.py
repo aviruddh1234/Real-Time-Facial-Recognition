@@ -3,6 +3,7 @@ from tkinter import ttk
 from PIL import Image,ImageTk
 from tkinter import messagebox
 import mysql.connector
+import cv2
 
 class Student:
     def __init__(self,root):
@@ -228,7 +229,7 @@ class Student:
         btn_frame1=Frame(class_Student_frame,bd=2,relief=RIDGE,bg="white")
         btn_frame1.place(x=0,y=235,width=715,height=35)
 
-        take_photo_btn=Button(btn_frame1, text="Take Photo Sample", width =35 ,font=("times new roman",13,"bold"), bg="blue", fg="white")
+        take_photo_btn=Button(btn_frame1,command=self.generate_dataset, text="Take Photo Sample", width =35 ,font=("times new roman",13,"bold"), bg="blue", fg="white")
         take_photo_btn.grid(row=0,column=0)
 
         update_photo_btn=Button(btn_frame1, text="Update Photo Sample", width =35 ,font=("times new roman",13,"bold"), bg="blue", fg="white")
@@ -470,19 +471,80 @@ class Student:
         self.var_teacher.set("")
         self.var_radio1.set("")
         self.va_std_id.set("")
-                    
+    
+    #======================= take photo samples=================
+    def generate_dataset(self):
+        if self.var_dep.get()=="Select Department" or self.var_std_name.get()=="" or self.va_std_id.get()=="":
+            messagebox.showerror("Error","All fields are required",parent=self.root)
+        else:
+            try:
+                conn=mysql.connector.connect(host="localhost",username="root",password="ayuvi",database="face_recognizer")
+                my_cursor=conn.cursor()
+                my_cursor.execute("select * from student")
+                myresult=my_cursor.fetchall()
+                id=0
+                for x in myresult:
+                    id+=1
+                    my_cursor.execute("update student set Dep=%s,Course=%s,Year=%s,Semester=%s,Name=%s,Division=%s,Roll=%s,Gender=%s,Dob=%s,Email=%s,Phone=%s,Address=%s,Teacher=%s,PhotoSample=%s where Student_id=%s",(
+                    self.var_dep.get(),
+                    self.var_course.get(),
+                    self.var_year.get(),
+                    self.var_semester.get(),
+                    self.var_std_name.get(),
+                    self.var_div.get(),
+                    self.var_roll.get(),
+                    self.var_gender.get(),
+                    self.var_dob.get(),
+                    self.var_email.get(),
+                    self.var_phone.get(),
+                    self.var_address.get(),
+                    self.var_teacher.get(),
+                    self.var_radio1.get(),
+                    self.va_std_id.get()==id+1     
+                    ))
+                    conn.commit()
+                    self.fetch_data()
+                    self.reset_data()
+                    conn.close()
                 
+                    # ===============Load predefined data on face frontal from opencv==============
+
+                    face_classifier=cv2.CascadeClassifier(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\haarcascade_frontalface_default.xml")
+
+                    def face_cropped(img):
+                        gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)      # changed the images to grayscale
+                        faces=face_classifier.detectMultiScale(gray,scaleFactor=1.3,minNeighbors=5,minSize=(20,20))  #1.3-> scaling factor, #5-> minimum neighbour
+
+                        for (x,y,w,h) in faces:
+                            face_cropped=img[y:y+h,x:x+w]
+                            return face_cropped
+                    
+                    cap=cv2.VideoCapture(0)    #0 for webcam
+                    img_id=0
+                    while True:
+                        ret,my_frame=cap.read()
+                        if face_cropped(my_frame) is not None:
+                            img_id+=1
+                            face=cv2.resize(face_cropped(my_frame),(450,450))
+                            # face=cv2.cvtColor(face,cv2.COLOR_BGR2GRAY)
+                            file_name_path="C:/Users/User/OneDrive/Desktop/project grp-62/Real-Time-Facial-Recognition/data/user."+str(id)+"."+str(img_id)+".jpg"
+                            cv2.imwrite(file_name_path,face)
+                            cv2.putText(face,str(img_id),(50,50),cv2.FONT_HERSHEY_COMPLEX,2,(0,255,0),2)
+                            cv2.imshow("Cropped Face",face)
+
+                        if cv2.waitKey(1)==13 or int(img_id)==10:  #window gets closed on pressing enter 
+                            break
+                    cap.release()
+                    cv2.destroyAllWindows()
+                    messagebox.showinfo("Result","Genereating dataset completed successfully!",parent=self.root)
+            
+            except Exception as es:
+                messagebox.showerror("Error",f"Due to:{str(es)}",parent=self.root)
+
+ 
+
 
         
-
-
-
-            
-
-    
-    
-
-
 if __name__=="__main__":
     root=Tk()
     obj=Student(root)
