@@ -2,11 +2,16 @@
 MAIN WINDOW 
 ########
 
+#### Root ####
+- It is used to create opening window using root = Tk()
+- root.geometry("width x height") is used to define window size
+- root.mainloop() is used to run the GUI
+
 #### Images ####
 - Loaded using PIL's Image.open("path")
 - Resized using image.resize((size), interpolation_function)
 - Converted to Tkinter images using ImageTk.PhotoImage(image)
-- Label(root, image) is used to place these images on Frame
+- Label(root, image) is used to create a label containing these images
 - Put on root using .place(x, y, width, height)
 
 #### Buttons ####
@@ -21,12 +26,57 @@ MAIN WINDOW
 #### Attendance Button ####
 
 #### Train Face Button ####
-- Calls train_data() function.
-- This function trains the data using LBPH algorithm on the dataset of each student.
-- The ouput is a XML file containing the model trained on our data which can be used to detect faces.
+- Calls train_data() function
+- This function trains the data using LBPH algorithm on the dataset of each student
+- The ouput is a XML file containing the model trained on our data which can be used to detect faces
 
 #### Photos Button ####
-- os.startfile(path) is used to open a folder present at specified path.
-- Used to open folder containing all the training images for each student.
+- os.startfile(path) is used to open a folder present at specified path
+- Used to open folder containing all the training images for each student
 
 #### Exit Button ####
+
+
+
+
+########
+STUDENT WINDOW
+########
+
+#### Images ####
+- Loaded using PIL's Image.open("path")
+- Resized using image.resize((size), interpolation_function)
+- Converted to Tkinter images using ImageTk.PhotoImage(image)
+- Label(root, image) is used to create a label containing these images
+- Put on root using .place(x, y, width, height)
+
+#### Variables ####
+- Tkinter has StringVar() to hold string values
+- It helps manage the value of a widget such as an Entry or a Label Widget
+
+#### Frame ####
+- Frame() acts as a container that can be used to implement more complex layouts containing smaller labels.
+- They can be further subdivided using LabelFrame()
+
+#### Combobox ####
+- Tkinter has Combobox Widget that creates drop-down list having multiple option
+- ttk.Combobox(frame, textvariable, values, state = 'readonly', width)
+- textvariable is used to store the selected value from the values in a StringVar()
+
+#### Department ####
+- Combobox that contains options to select the Department (ComputerScience, Aerospace, Electrical, Mechanical)
+- The selected option is stored in var_dep
+
+#### Course ####
+- Combobox that contains options to select the Course (Bachelor of Engineering, Bachelor of Technology, Bachelor of Science)
+- The selected option is stored in var_course
+
+#### Year ####
+- Combobox that contains options to select the Batch Year (2020, 2021, 2022, 2023)
+- The selected option is stored in var_year
+
+#### Semester ####
+- Combobox that contains options to select the Current Semester (1st Semester, 2nd Semester, 3rd Semester, 4th Semester, 5th Semester, 6th Semester, 7th Semester, 8th Semester)
+- The selected option is stored in var_semester
+
+#### Student ID ####
