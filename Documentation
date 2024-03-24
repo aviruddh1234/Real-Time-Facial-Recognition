@@ -173,4 +173,23 @@ PHOTO SAMPLES
 ########
 
 #### generate_dataset() ####
-- Uses 
+- Uses OpenCV to generate a facial image dataset
+- Cascade Classifier is used to detect the faces in the image using the dataset "haarcascade_frontalface_default.xml"
+- The video feed is directly captured from the Webcam and if the face is detected it is saved under the same id
+
+########
+TRAIN
+########
+
+#### Training Window ####
+- New Window consisting different buttons for training the dataset
+- The dataset is trained on user entered images
+
+#### train_classifier() ####
+- A list containing the paths of each image is generated
+- Each image is opened and converted to grayscale
+- The grayscaled image is then converted into a numpy array
+- A object of cv2.face.LBPHFaceRecognizer_create() is created
+- The model is trained on students' images
+- The result is stored in classifier.xml file
+--  is
