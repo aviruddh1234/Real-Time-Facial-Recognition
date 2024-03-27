@@ -117,10 +117,10 @@ class Face_Recognition_System:
         b1_1=Button(bg_img,text="Exit",cursor="hand2",font = ("times new roman", 15, "bold"),bg= "darkblue", fg="white")
         b1_1.place(x=800,y=580,width=220,height=40)
 
+    # ===============Function Buttons=============
+
     def open_img(self):
         os.startfile(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\data")
-    
-    # ===============Function Buttons=============
     
     def student_details(self):
         self.new_window=Toplevel(self.root)

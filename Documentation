@@ -1,0 +1,195 @@
+########
+MAIN WINDOW 
+########
+
+#### Root ####
+- It is used to create opening window using root = Tk()
+- root.geometry("width x height") is used to define window size
+- root.mainloop() is used to run the GUI
+
+#### Images ####
+- Loaded using PIL's Image.open("path")
+- Resized using image.resize((size), interpolation_function)
+- Converted to Tkinter images using ImageTk.PhotoImage(image)
+- Label(root, image) is used to create a label containing these images
+- Put on root using .place(x, y, width, height)
+
+#### Buttons ####
+- Button(command) where command is used to call a specific function
+- Placed using .place(x, y, width, height)
+
+#### Student Button ####
+- Calls student_details() function that opens new window for modifying student details
+
+#### Detect Face Button #### //
+
+#### Attendance Button #### //
+
+#### Train Face Button ####
+- Calls train_data() function
+- This function trains the data using LBPH algorithm on the dataset of each student
+- The ouput is a XML file containing the model trained on our data which can be used to detect faces
+
+#### Photos Button ####
+- os.startfile(path) is used to open a folder present at specified path
+- Used to open folder containing all the training images for each student
+
+#### Exit Button #### //
+
+
+
+
+########
+STUDENT WINDOW
+########
+
+#### Images ####
+- Loaded using PIL's Image.open("path")
+- Resized using image.resize((size), interpolation_function)
+- Converted to Tkinter images using ImageTk.PhotoImage(image)
+- Label(root, image) is used to create a label containing these images
+- Put on root using .place(x, y, width, height)
+
+#### Variables ####
+- Tkinter has StringVar() to hold string values
+- It helps manage the value of a widget such as an Entry or a Label Widget
+
+#### Frame ####
+- Frame() acts as a container that can be used to implement more complex layouts containing smaller labels.
+- They can be further subdivided using LabelFrame()
+
+#### Combobox ####
+- Tkinter has Combobox Widget that creates drop-down list having multiple option
+- ttk.Combobox(frame, textvariable, values, state = 'readonly', width)
+- textvariable is used to store the selected value from the values in a StringVar()
+
+#### Entry Field ####
+- The Entry widget is used to accept-line text strings from user
+- Multiple methods allow easy access to entered user data and modifications in the widget itself
+
+#### Buttons ####
+- Button(command) where command is used to call a specific function
+- Placed using .place(x, y, width, height)
+
+#### Radio Buttons ####
+- They are used to implement one-of-many selections
+- Can contain text or images and when the button is pressed, the specified method is called
+
+
+#### Department ####
+- (ComputerScience, Aerospace, Electrical, Mechanical) : var_dep
+
+#### Course ####
+- (Bachelor of Engineering, Bachelor of Technology, Bachelor of Science) : var_course
+
+#### Year ####
+- (2020, 2021, 2022, 2023) : var_year
+
+#### Semester ####
+- (1st Semester, 2nd Semester, 3rd Semester, 4th Semester, 5th Semester, 6th Semester, 7th Semester, 8th Semester) : var_semester
+
+#### Student ID ####
+- Entry field : value stored in var_std_name
+
+#### Class Division ####
+- (Core, AI, Cloud, CyberSec, Health Info, Gaming)
+
+#### Roll Number ####
+- Entry field : value stored in var_roll
+
+#### Gender ####
+- (Male, Female, Other) : var_gender
+
+#### Date of Birth ####
+- Entry field : value stored in var_dob
+
+#### Email ####
+- Entry field : value stored in var_email
+
+#### Phone Number ####
+- Entry field : value stored in var_phone
+
+#### Address ####
+- Entry field : value stored in var_address
+
+#### Faculty Info ####
+- Entry field : value stored in var_teacher
+
+#### Take Photo Sample #### //
+
+#### No Photo Sample #### //
+
+#### Save Button ####
+- Calls the function to save the selected and entered values
+
+#### Update Button ####
+- Calls the function to update the previously entered values with new values
+
+#### Delete Button ####
+- Calls the function to delete the selected data
+
+#### Reset Button ####
+- Calls the function to reset whole table
+
+#### SEARCH SYSTEM ####
+- Searches the database for a specified registration number or phone number
+
+#### Search Button #### //
+
+#### Show All Button #### //
+
+########
+MYSQL WORKBENCH
+########
+
+#### Student Table Frame ####
+- Used to display all the stored information of students
+- Can be scrolled left to right and top to bottom
+- Columns consist of Department, Course, Name, Roll No., etc.
+- Calls upon get_cursor() method and fetch_data() method
+
+#### fetch_data() ####
+- Estabilishes a connection with MySQL Workbench using mysql.connector.connect()
+- Fetches the full table from Workbench
+- Loops through it and enters the values into Student Table
+
+#### get_cursor() ####
+- Focuses the cursor on selected table using .focus() method
+- Sets each variable equal to the selected row in the table
+
+#### add_data() ####
+- If any of the field is left empty, error message is shown
+- Establishes a connection with MySQL Workbench
+- Inserts all the entered values into the table
+- Closes the connection after commiting the changes
+
+#### update_data() and delete_data() ####
+- Asks yes or no wether you would like to update or delete the selected row
+- If yes, updates the table accordingly
+
+
+########
+PHOTO SAMPLES 
+########
+
+#### generate_dataset() ####
+- Uses OpenCV to generate a facial image dataset
+- Cascade Classifier is used to detect the faces in the image using the dataset "haarcascade_frontalface_default.xml"
+- The video feed is directly captured from the Webcam and if the face is detected it is saved under the same id
+
+########
+TRAIN
+########
+
+#### Training Window ####
+- New Window consisting different buttons for training the dataset
+- The dataset is trained on user entered images
+
+#### train_classifier() ####
+- A list containing the paths of each image is generated
+- Each image is opened and converted to grayscale
+- The grayscaled image is then converted into a numpy array
+- A object of cv2.face.LBPHFaceRecognizer_create() is created
+- The model is trained on students' images
+- The result is stored in classifier.xml file
+--  is
