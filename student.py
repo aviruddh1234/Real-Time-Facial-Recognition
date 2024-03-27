@@ -105,7 +105,7 @@ class Student:
         year_label.grid(row=1, column=0, padx=10, pady=5,sticky=W)
 
         year_combo = ttk.Combobox(current_course_frame,textvariable=self.var_year, font=("times new roman", 12, "bold"), state="readonly", width=17)
-        year_combo["values"] = ("Select Year", "First Year", "Second Year", "Third Year", "Fourth Year")
+        year_combo["values"] = ("2020", "2021", "2022", "2023")
         year_combo.current(0)
         year_combo.grid(row=1, column=1, padx=2, pady=10,sticky=W)
 
