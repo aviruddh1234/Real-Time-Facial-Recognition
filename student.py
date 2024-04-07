@@ -116,7 +116,7 @@ class Student:
         semester_label.grid(row=1, column=2, padx=10, pady=5,sticky=W)
 
         semester_combo = ttk.Combobox(current_course_frame,textvariable=self.var_semester, font=("times new roman", 12, "bold"), state="readonly", width=17)
-        semester_combo["values"] = ("Select Semester", "1st Semester", "2nd Semester", "3rd Semester", "4th Semester", "5th Semester", "6th Semester", "7th Semester", "8th Semester")
+        semester_combo["values"] = ("Select Semester", "Fall", "Winter", "Summer", "Interim")
         semester_combo.current(0)
         semester_combo.grid(row=1, column=3, padx=2, pady=10,sticky=W)
 
@@ -209,7 +209,7 @@ class Student:
         radiobtn2=ttk.Radiobutton(class_Student_frame,variable=self.var_radio1,text="No Photo Sample", value="No")
         radiobtn2.grid(row=5, column=1)
 
-        #bbuttons frame
+        #buttons frame
         btn_frame=Frame(class_Student_frame,bd=2,relief=RIDGE,bg="white")
         btn_frame.place(x=0,y=200,width=715,height=35)
 
@@ -263,12 +263,13 @@ class Student:
         search_entry.grid(row=0, column=2, padx=10, pady=5, sticky=W)
 
         
-        search_btn=Button(Search_frame, text="Search", width =12 ,font=("times new roman",12,"bold"), bg="blue", fg="white")
+        search_btn=Button(Search_frame, text="Search", width =12 ,font=("times new roman",12,"bold"), bg="blue", fg="white",command=self.search_data)
         search_btn.grid(row=0,column=3,)
 
-        showAll_btn=Button(Search_frame, text="Reset", width =12 ,font=("times new roman",12,"bold"), bg="blue", fg="white")
+        showAll_btn=Button(Search_frame, text="Reset", width =12 ,font=("times new roman",12,"bold"), bg="blue", fg="white",command=self.fetch_data)
         showAll_btn.grid(row=0,column=4,)
 
+        
         # ======Table Frame========
         table_frame  = Frame(Right_frame, bd=2 ,bg="white", relief=RIDGE)
         table_frame.place(x=5,y=210,width=710,height=350)
@@ -321,6 +322,50 @@ class Student:
         self.fetch_data()
 
     # ===============function declaration==================
+    
+    def search_data(self):
+        if self.search_combo.get() == "Select" or self.search_entry.get() == "":
+            messagebox.showerror("Error", "Please select a search criteria and enter a value.", parent=self.root)
+        else:
+            try:
+                conn = mysql.connector.connect(host="localhost", username="root", password="ayuvi", database="face_recognizer")
+                my_cursor = conn.cursor()
+
+                if self.search_combo.get() == "Roll_No.":
+                    my_cursor.execute("select * from student where Roll=%s", (self.search_entry.get(),))
+                elif self.search_combo.get() == "Phone_No.":
+                    my_cursor.execute("select * from student where Phone=%s", (self.search_entry.get(),))
+                
+                data = my_cursor.fetchone()
+
+                if data is not None:
+                    self.var_dep.set(data[0])
+                    self.var_course.set(data[1])
+                    self.var_year.set(data[2])
+                    self.var_semester.set(data[3])
+                    self.va_std_id.set(data[4])
+                    self.var_std_name.set(data[5])
+                    self.var_div.set(data[6])
+                    self.var_roll.set(data[7])
+                    self.var_gender.set(data[8])
+                    self.var_dob.set(data[9])
+                    self.var_email.set(data[10])
+                    self.var_phone.set(data[11])
+                    self.var_address.set(data[12])
+                    self.var_teacher.set(data[13])
+                    self.var_radio1.set(data[14])
+                    messagebox.showinfo("Success", "Student found and details loaded.", parent=self.root)
+                else:
+                    messagebox.showinfo("Result", "No student found with the provided criteria.", parent=self.root)
+
+                conn.commit()
+                conn.close()
+            except Exception as es:
+                messagebox.showerror("Error", f"An error occurred while searching: {str(es)}", parent=self.root)
+
+
+    
+    
     
     def add_data(self):
         if self.var_dep.get()=="Select Department" or self.var_std_name.get()=="" or self.va_std_id.get()=="":
@@ -485,58 +530,58 @@ class Student:
                 id=0
                 for x in myresult:
                     id+=1
-                    my_cursor.execute("update student set Dep=%s,Course=%s,Year=%s,Semester=%s,Name=%s,Division=%s,Roll=%s,Gender=%s,Dob=%s,Email=%s,Phone=%s,Address=%s,Teacher=%s,PhotoSample=%s where Student_id=%s",(
-                    self.var_dep.get(),
-                    self.var_course.get(),
-                    self.var_year.get(),
-                    self.var_semester.get(),
-                    self.var_std_name.get(),
-                    self.var_div.get(),
-                    self.var_roll.get(),
-                    self.var_gender.get(),
-                    self.var_dob.get(),
-                    self.var_email.get(),
-                    self.var_phone.get(),
-                    self.var_address.get(),
-                    self.var_teacher.get(),
-                    self.var_radio1.get(),
-                    self.va_std_id.get()==id+1     
-                    ))
-                    conn.commit()
-                    self.fetch_data()
-                    self.reset_data()
-                    conn.close()
+                my_cursor.execute("update student set Dep=%s,Course=%s,Year=%s,Semester=%s,Name=%s,Division=%s,Roll=%s,Gender=%s,Dob=%s,Email=%s,Phone=%s,Address=%s,Teacher=%s,PhotoSample=%s where Student_id=%s",(
+                self.var_dep.get(),
+                self.var_course.get(),
+                self.var_year.get(),
+                self.var_semester.get(),
+                self.var_std_name.get(),
+                self.var_div.get(),
+                self.var_roll.get(),
+                self.var_gender.get(),
+                self.var_dob.get(),
+                self.var_email.get(),
+                self.var_phone.get(),
+                self.var_address.get(),
+                self.var_teacher.get(),
+                self.var_radio1.get(),
+                self.va_std_id.get()==id+1     
+                ))
+                conn.commit()
+                self.fetch_data()
+                self.reset_data()
+                conn.close()
                 
-                    # ===============Load predefined data on face frontal from opencv==============
+                # ===============Load predefined data on face frontal from opencv==============
 
-                    face_classifier=cv2.CascadeClassifier(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\haarcascade_frontalface_default.xml")
+                face_classifier=cv2.CascadeClassifier(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\haarcascade_frontalface_default.xml")
 
-                    def face_cropped(img):
-                        gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)      # changed the images to grayscale
-                        faces=face_classifier.detectMultiScale(gray,scaleFactor=1.3,minNeighbors=5,minSize=(20,20))  #1.3-> scaling factor, #5-> minimum neighbour
+                def face_cropped(img):
+                    gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)      # changed the images to grayscale
+                    faces=face_classifier.detectMultiScale(gray,scaleFactor=1.3,minNeighbors=5,minSize=(20,20))  #1.3-> scaling factor, #5-> minimum neighbour
 
-                        for (x,y,w,h) in faces:
-                            face_cropped=img[y:y+h,x:x+w]
-                            return face_cropped
+                    for (x,y,w,h) in faces:
+                        face_cropped=img[y:y+h,x:x+w]
+                        return face_cropped
                     
-                    cap=cv2.VideoCapture(0)    #0 for webcam
-                    img_id=0
-                    while True:
-                        ret,my_frame=cap.read()
-                        if face_cropped(my_frame) is not None:
-                            img_id+=1
-                            face=cv2.resize(face_cropped(my_frame),(450,450))
-                            face=cv2.cvtColor(face,cv2.COLOR_BGR2GRAY)
-                            file_name_path="C:/Users/User/OneDrive/Desktop/project grp-62/Real-Time-Facial-Recognition/data/user."+str(id)+"."+str(img_id)+".jpg"
-                            cv2.imwrite(file_name_path,face)
-                            cv2.putText(face,str(img_id),(50,50),cv2.FONT_HERSHEY_COMPLEX,2,(0,255,0),2)
-                            cv2.imshow("Cropped Face",face)
+                cap=cv2.VideoCapture(0)    #0 for webcam
+                img_id=0
+                while True:
+                    ret,my_frame=cap.read()
+                    if face_cropped(my_frame) is not None:
+                        img_id+=1
+                        face=cv2.resize(face_cropped(my_frame),(450,450))
+                        face=cv2.cvtColor(face,cv2.COLOR_BGR2GRAY)
+                        file_name_path="C:/Users/User/OneDrive/Desktop/project grp-62/Real-Time-Facial-Recognition/data/user."+str(id)+"."+str(img_id)+".jpg"
+                        cv2.imwrite(file_name_path,face)
+                        cv2.putText(face,str(img_id),(50,50),cv2.FONT_HERSHEY_COMPLEX,2,(0,255,0),2)
+                        cv2.imshow("Cropped Face",face)
 
-                        if cv2.waitKey(1)==13 or int(img_id)==20:  #window gets closed on pressing enter 
-                            break
-                    cap.release()
-                    cv2.destroyAllWindows()
-                    messagebox.showinfo("Result","Genereating dataset completed successfully!",parent=self.root)
+                    if cv2.waitKey(1)==13 or int(img_id)==100:  #window gets closed on pressing enter 
+                        break
+                cap.release()
+                cv2.destroyAllWindows()
+                messagebox.showinfo("Result","Genereating dataset completed successfully!",parent=self.root)
             
             except Exception as es:
                 messagebox.showerror("Error",f"Due to:{str(es)}",parent=self.root)

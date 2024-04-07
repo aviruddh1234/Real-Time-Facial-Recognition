@@ -4,6 +4,9 @@ from PIL import Image, ImageTk
 import os
 from student import Student
 from train import Train 
+from face_recognition import Face_Recognition
+from attendance import Attendance
+from tkinter import messagebox
 
 class Face_Recognition_System:
     def __init__(self, root):
@@ -62,10 +65,10 @@ class Face_Recognition_System:
         img5 = img5.resize((220, 220), Image.LANCZOS)
         self.photoimg5 = ImageTk.PhotoImage(img5)
 
-        b1=Button(bg_img,image=self.photoimg5, cursor="hand2")
+        b1=Button(bg_img,image=self.photoimg5, cursor="hand2",command=self.face_data)
         b1.place(x=500,y=100,width=220,height=220)
 
-        b1_1=Button(bg_img,text="Face Detector",cursor="hand2",font = ("times new roman", 15, "bold"),bg= "darkblue", fg="white")
+        b1_1=Button(bg_img,text="Face Detector",cursor="hand2",command=self.face_data,font = ("times new roman", 15, "bold"),bg= "darkblue", fg="white")
         b1_1.place(x=500,y=300,width=220,height=40)
 
 
@@ -75,10 +78,10 @@ class Face_Recognition_System:
         img6 = img6.resize((220, 220), Image.LANCZOS)
         self.photoimg6 = ImageTk.PhotoImage(img6)
 
-        b1=Button(bg_img,image=self.photoimg6, cursor="hand2")
+        b1=Button(bg_img,image=self.photoimg6, cursor="hand2",command=self.attendance_data)
         b1.place(x=800,y=100,width=220,height=220)
 
-        b1_1=Button(bg_img,text="Attendence",cursor="hand2",font = ("times new roman", 15, "bold"),bg= "darkblue", fg="white")
+        b1_1=Button(bg_img,text="Attendence",cursor="hand2",command=self.attendance_data,font = ("times new roman", 15, "bold"),bg= "darkblue", fg="white")
         b1_1.place(x=800,y=300,width=220,height=40)
 
         #Train face Button
@@ -111,11 +114,19 @@ class Face_Recognition_System:
         img11 = img11.resize((220, 220), Image.LANCZOS)
         self.photoimg11 = ImageTk.PhotoImage(img11)
 
-        b1=Button(bg_img,image=self.photoimg11, cursor="hand2")
+        b1=Button(bg_img,image=self.photoimg11, cursor="hand2",command=self.iExit)
         b1.place(x=800,y=380,width=220,height=220)
 
-        b1_1=Button(bg_img,text="Exit",cursor="hand2",font = ("times new roman", 15, "bold"),bg= "darkblue", fg="white")
+        b1_1=Button(bg_img,text="Exit",cursor="hand2",command=self.iExit,font = ("times new roman", 15, "bold"),bg= "darkblue", fg="white")
         b1_1.place(x=800,y=580,width=220,height=40)
+
+    
+    def iExit(self):
+        self.iExit = messagebox.askyesno("Face Recognition", "Are you sure you want to exit this application?",parent=self.root)
+        if self.iExit:
+            self.root.destroy()
+        else:
+            return 
 
     # ===============Function Buttons=============
 
@@ -130,18 +141,14 @@ class Face_Recognition_System:
         self.new_window=Toplevel(self.root)
         self.app=Train(self.new_window)
 
+    def face_data(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Face_Recognition(self.new_window)
+
+    def attendance_data(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Attendance(self.new_window)
     
-
-
-
-
-
-
-
-        
-        
-
-
 
 if __name__ == "__main__":  
     root = Tk()
