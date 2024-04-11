@@ -16,7 +16,7 @@ class Train:
         title_lbl=Label(self.root , text ="TRAINING THE DATASET", font = ("times new roman", 45, "bold"),bg= "white", fg="red")
         title_lbl.place(x=0,y=0,width=1530,height=45)
 
-        img_top = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\login.png")
+        img_top = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\main_bg.jpg")
         img_top = img_top.resize((1530, 325), Image.LANCZOS)
         self.photoimg_top = ImageTk.PhotoImage(img_top )
 
@@ -27,7 +27,7 @@ class Train:
         b1_1=Button(self.root,text="TRAIN DATA",command=self.train_classifier,cursor="hand2",font = ("times new roman", 30, "bold"),bg= "darkblue", fg="white")
         b1_1.place(x=0,y=380,width=1530,height=60)
 
-        img_bottom = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\login.png")
+        img_bottom = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\main_bg.jpg")
         img_bottom = img_bottom.resize((1530, 325), Image.LANCZOS)
         self.photoimg_bottom = ImageTk.PhotoImage(img_bottom )
 

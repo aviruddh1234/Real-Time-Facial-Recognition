@@ -26,20 +26,14 @@ class Attendance:
         self.var_atten_attendance=StringVar()
 
          #first img
-        img = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\login.png")
-        img = img.resize((800, 200), Image.LANCZOS)
+        img = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\main_img1.jpg")
+        img = img.resize((1600, 200), Image.LANCZOS)
         self.photoimg = ImageTk.PhotoImage(img)
 
         f_lbl = Label(self.root, image=self.photoimg)
-        f_lbl.place(x=0, y=0, width=800, height=200)
+        f_lbl.place(x=0, y=0, width=1600, height=200)
 
-        #second
-        img1 = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\login.png")
-        img1 = img1.resize((800, 200), Image.LANCZOS)
-        self.photoimg1 = ImageTk.PhotoImage(img1)
-
-        f_lbl = Label(self.root, image=self.photoimg1)
-        f_lbl.place(x=800, y=0, width=800, height=200)
+    
 
         #bg
         img3 = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\login.png")
@@ -60,7 +54,7 @@ class Attendance:
         Left_frame =  LabelFrame(main_frame, bd=2 ,bg="white", relief=RIDGE, text="Student Attendance Details", font=("times new roman",12,"bold"))
         Left_frame.place(x=10,y=10,width=730,height=580)
 
-        img_left = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\login.png")
+        img_left = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\student_img2.png")
         img_left = img_left.resize((720, 130), Image.LANCZOS)
         self.photoimg_left = ImageTk.PhotoImage(img_left )
         

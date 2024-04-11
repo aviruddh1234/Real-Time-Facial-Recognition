@@ -19,7 +19,7 @@ class Face_Recognition:
         title_lbl.place(x=0,y=0,width=1530,height=45)
 
         # top image 
-        img_top = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\login.png")
+        img_top = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\main_bg.jpg")
         img_top = img_top.resize((1530, 325), Image.LANCZOS)
         self.photoimg_top = ImageTk.PhotoImage(img_top )
 
@@ -27,7 +27,7 @@ class Face_Recognition:
         f_lbl.place(x=0, y=55, width=1530, height=325)
 
         # bottom image 
-        img_bottom = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\login.png")
+        img_bottom = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\main_bg.jpg")
         img_bottom = img_bottom.resize((1530, 325), Image.LANCZOS)
         self.photoimg_bottom = ImageTk.PhotoImage(img_bottom )
 
