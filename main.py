@@ -22,7 +22,7 @@ class Face_Recognition_System:
         f_lbl.place(x=0, y=0, width=505, height=130)
 
         #second
-        img1 = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\logo.png")
+        img1 = Image.open(r"C:\Users\User\OneDrive\Desktop\project grp-62\Real-Time-Facial-Recognition\images\logo (2).png")
         img1 = img1.resize((505, 130), Image.LANCZOS)
         self.photoimg1 = ImageTk.PhotoImage(img1)
 
